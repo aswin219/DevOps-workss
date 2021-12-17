@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx222
+    volumes:
+      - ./:/var/www
+      - ./nginx/default.conf:/etc/nginx/conf.d
+    ports:
+      - 88:80
+    networks:
+      - my-network
+    depends_on:
+      - flask
+  flask:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: flask222
+    command: python3 app.py
+    volumes:
+      - ./:/var/www
+    networks:
+      my-network:
+        aliases:
+          - flask-app
+
+networks:
+  my-network:

@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+
+    app:
+        build: app
+
+    nginx:
+        container_name: nginx1
+        build: nginx
+        ports:
+            - 83:80
+        depends_on:
+           - app
